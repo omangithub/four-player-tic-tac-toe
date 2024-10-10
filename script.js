@@ -17,6 +17,7 @@ const submitButOne = document.getElementById("submitOne");
 const submitButTwo = document.getElementById("submitTwo");
 const submitButThree = document.getElementById("submitThree");
 const submitButFour = document.getElementById("submitFour");
+const beginGameBut = document.getElementById("beginGameButton")
 
 function playerDetails (name, battleCry, teamColor) {
         this.name = name;
@@ -90,37 +91,36 @@ let playerFourDetails={};
 
 submitButOne.addEventListener("click", ()=> {
     playerOneDetails = new playerDetails(playerOneName.value,playerOneBattleCry.value,teamColorOneChoice.value);
-    let playerOneText = document.getElementById("playerOne");
+    let playerOneText = document.getElementById("playerOneText");
     playerOneText.innerText = playerOneDetails.name;
-    playersReady();
 });
 
 submitButTwo.addEventListener("click", ()=> {
     playerTwoDetails = new playerDetails(playerTwoName.value,playerTwoBattleCry.value,teamColorTwoChoice.value);
-    let playerTwoText = document.getElementById("playerTwo");
+    let playerTwoText = document.getElementById("playerTwoText");
     playerTwoText.innerText = playerTwoDetails.name;
-    playersReady();
 });
 
 submitButThree.addEventListener("click", ()=> {
     playerThreeDetails = new playerDetails(playerThreeName.value,playerThreeBattleCry.value,teamColorThreeChoice.value);
-    let playerThreeText = document.getElementById("playerThree");
+    let playerThreeText = document.getElementById("playerThreeText");
     playerThreeText.innerText = playerThreeDetails.name;
-    playersReady();
 });
 
 submitButFour.addEventListener("click", ()=> {
     playerFourDetails = new playerDetails(playerFourName.value,playerFourBattleCry.value,teamColorFourChoice.value);
-    let playerFourText = document.getElementById("playerFour");
+    let playerFourText = document.getElementById("playerFourText");
     playerFourText.innerText = playerFourDetails.name;
-    playersReady();
 });
 
-let playersReady = function () {
-  if (playerOneDetails.name!==undefined && playerTwoDetails.name!==undefined && playerThreeDetails.name!==undefined && playerFourDetails.name!==undefined) {
-    gamebegin()
-  }
-} 
+beginGameBut.addEventListener("click", ()=>{
+    if (playerOneDetails.name!==undefined && playerTwoDetails.name!==undefined && playerThreeDetails.name!==undefined && playerFourDetails.name!==undefined) {
+        gamebegin()
+      } else {
+        let instructionText = document.getElementById("instructions")
+        instructionText.innerText = "You cannot begin the game until all names have been entered!"
+      }
+})
 
 let gamebegin = function () {
     console.log(playerOneDetails.name);

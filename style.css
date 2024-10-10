@@ -104,7 +104,27 @@ p, input, .submitButton, select {
     background-color: yellow;
 }
 
+#playerOneText, #playerTwoText, #playerThreeText, #playerFourText {
+  text-height: 100px;
+  text-align: center;
+  font: 4em sans-serif;
+}
+
+#playerTwoText {
+  writing-mode: vertical-rl;
+text-orientation: mixed;
+}
+
+#playerFourText {
+  transform: rotate(180deg);
+  writing-mode: vertical-rl;
+text-orientation: mixed;
+}
+
 .topBottomPlayer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border:2px black solid;
   min-height: 200px;
   min-width: 600px;
@@ -112,6 +132,9 @@ p, input, .submitButton, select {
 }
 
 .leftRightPlayer {
+  display:flex;
+  align-items: center;
+  justify-content: center;
     border:2px black solid;
     min-height:600px;
     min-width: 200px;
