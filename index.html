@@ -8,15 +8,89 @@
     <title>4 player Tic Tac Toe Practice with Objects</title>
 </head>
 <body>
+    <div id="menuBox">Four Player Tic-Tac-Toe</div>
+    <div id="instructions">The game will begin once the player details have been filled out.</div>
+    <div id="menuInterface">
+        <div id="spacer"></div>
+        <div id="playerOneInfo">
+        <form id="formOne">
+            <p>Player 1:</p>
+            <label for="nameOne">Name:</label>
+            <input name="name" id="nameOne">
+            <label for="battleCryOne">Battle Cry:</label>
+            <input name="battleCry" id="battleCryOne" value="I am the strongest!">
+            <label for="changeTeamColorOne">Team Color:</label>
+            <select id="changeTeamColorOne">
+                <option selected disabled>Choose your color</option>
+                <option selected="selected" value="Blue">Blue</option>
+                <option value="Purple">Purple</option>
+            </select> 
+            <button type="button" id="submitOne" class="submitButton">Submit</button>
+        </form>
+        </div>
+        <div id="playerTwoInfo">
+            <form id="formTwo">
+                <p>Player 2:</p>
+                <label for="nameTwo">Name:</label>
+                <input name="name" id="nameTwo">
+                <label for="battleCryTwo">Battle Cry:</label>
+                <input name="battleCry" id="battleCryTwo" value="Winner!">
+                <label for="changeTeamColorTwo">Team Color:</label>
+                <select id="changeTeamColorTwo">
+                    <option selected disabled>Choose your color</option>
+                    <option selected="selected" value="Red">Red</option>
+                    <option value="Orange">Orange</option>
+                </select> 
+                <button type="submit" id="submitTwo" class="submitButton">Submit</button>
+            </form>
+        </div>
+        <div id="playerThreeInfo">
+            <form id="formThree">
+                <p>Player 3:</p>
+                <label for="nameThree">Name:</label>
+                <input name="name" id="nameThree">
+                <label for="battleCryThree">Battle Cry:</label>
+                <input name="battleCry" id="battleCryThree" value="I am king!">
+                <label for="changeTeamColorThree">Team Color:</label>
+                <select id="changeTeamColorThree">
+                    <option selected disabled>Choose your color</option>
+                    <option selected="selected" value="Green">Green</option>
+                    <option value="Pink">Pink</option>
+                </select> 
+                <button type="submit" id="submitThree" class="submitButton">Submit</button>
+            </form>
+        </div>
+        <div id="playerFourInfo">
+            <form id="formFour">
+                <p>Player 4:</p>
+                <label for="nameFour">Name:</label>
+                <input name="name" id="nameFour">
+                <label for="battleCryFour">Battle Cry:</label>
+                <input name="battleCry" id="battleCryFour" value="Hooray me!">
+                <label for="changeTeamColorFour">Team Color:</label>
+                <select id="changeTeamColorFour">
+                    <option selected disabled>Choose your color</option>
+                    <option selected="selected" value="Yellow">Yellow</option>
+                    <option value="Brown">Brown</option>
+                </select> 
+                <button type="submit" id="submitFour" class="submitButton">Submit</button>
+            </form>
+        </div>
+        <div id="spacer"></div>
+    </div>
+    <div id="buttonSpace">
+      <button>clear</button>
+      <button>submit</button>
+    </div>
     <div id="playingSpace">
         <div class="empty"></div>
         <div id="playerOne" class="topBottomPlayer"></div>
         <div class="empty"></div>
-        <div id="playerTwo" class="leftRightPlayer"></div>
+        <div id="playerFour" class="leftRightPlayer"></div>
         <div id="gameBoard"></div>
-        <div id="playerThree" class="leftRightPlayer"></div>
+        <div id="playerTwo" class="leftRightPlayer"></div>
         <div class="empty"></div>
-        <div id="playerFour" class="topBottomPlayer"></div>
+        <div id="playerThree" class="topBottomPlayer"></div>
         <div class="empty"></div>
     </div>
     <script src="script.js"></script>

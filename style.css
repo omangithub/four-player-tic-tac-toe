@@ -1,10 +1,110 @@
 * {
     margin: 0px;
     border: 0px;
+    box-sizing: border-box;
+}
+
+#menuBox {
+    text-align: center;
+  font-size: xx-large;
+  margin: auto;
+  min-width: 1000px
+}
+
+#spacer {
+    width:200px;
+    height:150px;
+}
+
+#menuInterface {
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 20px;
+    min-width: 1000px;
+    max-width: 1000px;
+}
+
+#instructions {
+    margin: auto;
+    min-width: 1000px;
+    text-align: center;
+}
+
+form {
+    display: inline-block;
+    padding: 1em;
+    border: 2px solid #ccc;
+    border-radius: 1em;
+}
+
+label {
+    /* Uniform size & alignment */
+    display: inline-block;
+    min-width: 90px;
+    text-align: right;
+}
+
+p, input, .submitButton, select {
+    font: 1em sans-serif;
+    /* Uniform text field size */
+    width: 150px;
+}
+
+.submitButton {
+    margin: 20px 0px;
+    border:1px black solid;
+    border-radius: 5%; 
+}
+
+#playerOneInfo {
+    background-color: rgb(0, 135, 255);
+    border: 2px solid black;
+}
+
+#playerTwoInfo {
+    background-color: red;
+    border: 2px solid black;
+}
+
+#playerThreeInfo {
+    background-color: rgb(40, 160, 40);
+    border: 2px solid black;
+}
+
+#playerFourInfo {
+    background-color: yellow;
+    border: 2px solid black;
+}
+
+#buttonSpace {
+    padding-bottom: 30px;
+    text-align: center;
+    min-width: 1000px;
+    margin: auto;
+}
+
+
+
+#playerOne {
+    background-color: rgb(0, 135, 255);
+}
+
+#playerTwo {
+    background-color: red;
+}
+
+#playerThree {
+    background-color: rgb(40, 160, 40);;
+}
+
+#playerFour {
+    background-color: yellow;
 }
 
 .topBottomPlayer {
-  box-sizing:border-box;
   border:2px black solid;
   min-height: 200px;
   min-width: 600px;
@@ -12,11 +112,9 @@
 }
 
 .leftRightPlayer {
-    box-sizing:border-box;
     border:2px black solid;
     min-height:600px;
     min-width: 200px;
-    background-color: red;
 }
 
 .empty {
@@ -33,6 +131,10 @@
     min-width: 600px;
 }
 
+.outsideBox, .middleBox, .innerBox{
+    background-color: white;
+}
+
 .outsideBox {
   display:flex;
   justify-content: center;
@@ -42,6 +144,14 @@
 }
 
 .middleBox {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing:border-box;
+    border:2px black solid;
+  }
+
+.innerBox {
     display:flex;
     justify-content: center;
     align-items: center;
