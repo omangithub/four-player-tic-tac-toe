@@ -83,25 +83,53 @@ teamColorFourChoice.addEventListener("change", ()=>{
     }
 })
 
+let playerOneDetails={};
+let playerTwoDetails={};
+let playerThreeDetails={};
+let playerFourDetails={};
+
 submitButOne.addEventListener("click", ()=> {
     playerOneDetails = new playerDetails(playerOneName.value,playerOneBattleCry.value,teamColorOneChoice.value);
-    console.log(playerOneDetails);
+    let playerOneText = document.getElementById("playerOne");
+    playerOneText.innerText = playerOneDetails.name;
+    playersReady();
 });
 
 submitButTwo.addEventListener("click", ()=> {
     playerTwoDetails = new playerDetails(playerTwoName.value,playerTwoBattleCry.value,teamColorTwoChoice.value);
-    console.log(playerTwoDetails);
+    let playerTwoText = document.getElementById("playerTwo");
+    playerTwoText.innerText = playerTwoDetails.name;
+    playersReady();
 });
 
 submitButThree.addEventListener("click", ()=> {
     playerThreeDetails = new playerDetails(playerThreeName.value,playerThreeBattleCry.value,teamColorThreeChoice.value);
-    console.log(playerThreeDetails);
+    let playerThreeText = document.getElementById("playerThree");
+    playerThreeText.innerText = playerThreeDetails.name;
+    playersReady();
 });
 
 submitButFour.addEventListener("click", ()=> {
     playerFourDetails = new playerDetails(playerFourName.value,playerFourBattleCry.value,teamColorFourChoice.value);
-    console.log(playerFourDetails);
+    let playerFourText = document.getElementById("playerFour");
+    playerFourText.innerText = playerFourDetails.name;
+    playersReady();
 });
+
+let playersReady = function () {
+  if (playerOneDetails.name!==undefined && playerTwoDetails.name!==undefined && playerThreeDetails.name!==undefined && playerFourDetails.name!==undefined) {
+    gamebegin()
+  }
+} 
+
+let gamebegin = function () {
+    console.log(playerOneDetails.name);
+    console.log(playerTwoDetails.name);
+    console.log(playerThreeDetails.name);
+    console.log(playerFourDetails.name);
+}
+
+
 
 // generate a tic tac toe game board
 
