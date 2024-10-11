@@ -4,6 +4,11 @@
     box-sizing: border-box;
 }
 
+#topBox {
+  opacity: 1;
+  transition: all 1000ms;
+}
+
 #menuBox {
     text-align: center;
   font-size: xx-large;
@@ -28,6 +33,7 @@
 }
 
 #instructions {
+  padding: 20px 20px;
     margin: auto;
     min-width: 1000px;
     text-align: center;
@@ -59,6 +65,15 @@ p, input, .submitButton, select {
     border-radius: 5%; 
 }
 
+#beginGameButton {
+  font: 2em sans-serif;
+  background-color: red;
+  border-radius: 1em;
+  border:1px black solid;
+  width:200px;
+  height: 50px;
+}
+
 #playerOneInfo {
     background-color: rgb(0, 135, 255);
     border: 2px solid black;
@@ -80,7 +95,7 @@ p, input, .submitButton, select {
 }
 
 #buttonSpace {
-    padding-bottom: 30px;
+    padding-bottom: 20px;
     text-align: center;
     min-width: 1000px;
     margin: auto;
@@ -175,11 +190,13 @@ text-orientation: mixed;
   }
 
 .innerBox {
+  text-align: center;
     display:flex;
     justify-content: center;
     align-items: center;
     box-sizing:border-box;
     border:2px black solid;
+    font: 4em sans-serif;
   }
 
 #playingSpace {
@@ -188,5 +205,4 @@ text-orientation: mixed;
     margin: auto;
     display: flex;
     flex-wrap: wrap;
-    
 }

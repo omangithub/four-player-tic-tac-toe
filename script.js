@@ -13,11 +13,13 @@ let teamColorOneChoice = document.getElementById("changeTeamColorOne");
 let teamColorTwoChoice = document.getElementById("changeTeamColorTwo");
 let teamColorThreeChoice = document.getElementById("changeTeamColorThree");
 let teamColorFourChoice = document.getElementById("changeTeamColorFour");
+let gameStartVariable=false;
 const submitButOne = document.getElementById("submitOne");
 const submitButTwo = document.getElementById("submitTwo");
 const submitButThree = document.getElementById("submitThree");
 const submitButFour = document.getElementById("submitFour");
 const beginGameBut = document.getElementById("beginGameButton")
+
 
 function playerDetails (name, battleCry, teamColor) {
         this.name = name;
@@ -26,7 +28,7 @@ function playerDetails (name, battleCry, teamColor) {
 }
 
 teamColorOneChoice.addEventListener("change", ()=>{
-    console.log(teamColorOneChoice.value);
+    if(gameStartVariable===false) {
     if (teamColorOneChoice.value==="Purple") {
         console.log("hi");
         let OneBackColor = document.getElementById("playerOneInfo");
@@ -40,9 +42,10 @@ teamColorOneChoice.addEventListener("change", ()=>{
         playingSpaceOne.style.backgroundColor="rgb(0, 135, 255)";
 
     }
-})
+}})
 
 teamColorTwoChoice.addEventListener("change", ()=>{
+    if(gameStartVariable===false){
     if (teamColorTwoChoice.value==="Red") {
         let TwoBackColor = document.getElementById("playerTwoInfo");
         let playingSpaceTwo = document.getElementById("playerTwo");
@@ -54,9 +57,10 @@ teamColorTwoChoice.addEventListener("change", ()=>{
         TwoBackColor.style.backgroundColor="orange";
         playingSpaceTwo.style.backgroundColor="orange";
     }
-})
+}})
 
 teamColorThreeChoice.addEventListener("change", ()=>{
+    if(gameStartVariable===false){
     if (teamColorThreeChoice.value==="Green") {
         let ThreeBackColor = document.getElementById("playerThreeInfo");
         let playingSpaceThree = document.getElementById("playerThree");
@@ -68,9 +72,10 @@ teamColorThreeChoice.addEventListener("change", ()=>{
         ThreeBackColor.style.backgroundColor="pink";
         playingSpaceThree.style.backgroundColor="pink";
     }
-})
+}})
 
 teamColorFourChoice.addEventListener("change", ()=>{
+    if(gameStartVariable===false){
     if (teamColorFourChoice.value==="Yellow") {
         let FourBackColor = document.getElementById("playerFourInfo");
         let playingSpaceFour = document.getElementById("playerFour");
@@ -82,7 +87,7 @@ teamColorFourChoice.addEventListener("change", ()=>{
         FourBackColor.style.backgroundColor="brown";
         playingSpaceFour.style.backgroundColor="brown";
     }
-})
+}})
 
 let playerOneDetails={};
 let playerTwoDetails={};
@@ -90,28 +95,32 @@ let playerThreeDetails={};
 let playerFourDetails={};
 
 submitButOne.addEventListener("click", ()=> {
+    if(gameStartVariable===false){
     playerOneDetails = new playerDetails(playerOneName.value,playerOneBattleCry.value,teamColorOneChoice.value);
     let playerOneText = document.getElementById("playerOneText");
     playerOneText.innerText = playerOneDetails.name;
-});
+}});
 
 submitButTwo.addEventListener("click", ()=> {
+    if(gameStartVariable===false){
     playerTwoDetails = new playerDetails(playerTwoName.value,playerTwoBattleCry.value,teamColorTwoChoice.value);
     let playerTwoText = document.getElementById("playerTwoText");
     playerTwoText.innerText = playerTwoDetails.name;
-});
+}});
 
 submitButThree.addEventListener("click", ()=> {
+    if(gameStartVariable===false){
     playerThreeDetails = new playerDetails(playerThreeName.value,playerThreeBattleCry.value,teamColorThreeChoice.value);
     let playerThreeText = document.getElementById("playerThreeText");
     playerThreeText.innerText = playerThreeDetails.name;
-});
+}});
 
 submitButFour.addEventListener("click", ()=> {
+    if(gameStartVariable===false){
     playerFourDetails = new playerDetails(playerFourName.value,playerFourBattleCry.value,teamColorFourChoice.value);
     let playerFourText = document.getElementById("playerFourText");
     playerFourText.innerText = playerFourDetails.name;
-});
+}});
 
 beginGameBut.addEventListener("click", ()=>{
     if (playerOneDetails.name!==undefined && playerTwoDetails.name!==undefined && playerThreeDetails.name!==undefined && playerFourDetails.name!==undefined) {
@@ -123,10 +132,10 @@ beginGameBut.addEventListener("click", ()=>{
 })
 
 let gamebegin = function () {
-    console.log(playerOneDetails.name);
-    console.log(playerTwoDetails.name);
-    console.log(playerThreeDetails.name);
-    console.log(playerFourDetails.name);
+    gameStartVariable=true;
+    let goodByeMenu = document.getElementById("topBox");
+    let instructionText = document.getElementById("instructions")
+    instructionText.innerText = `Team information locked. ${playerOneDetails.teamColor} team begins and play continues clockwise. Players can choose an outer ring, an inner ring or the center box. If the team completes a line of three of the same box choice, the team wins. A team also wins with a line of one outer, one inner, and one center box (in that order).`
 }
 
 
@@ -134,6 +143,8 @@ let gamebegin = function () {
 // generate a tic tac toe game board
 
 const gameBoardVar = document.getElementById("gameBoard");
+let playerChoice="";
+let playerTurn = 1;
 
 function gameBoardGenerator () {
     for (i=0;i<9;i++) {
@@ -141,6 +152,11 @@ function gameBoardGenerator () {
         outerDiv.style.height="200px";
         outerDiv.style.width="200px";
         outerDiv.id="outerDiv" + i;
+        outerDiv.addEventListener("click",()=>{
+            if (gameStartVariable===true){
+            playerChoice="outerDiv" + i;
+            gamePlayerTurn();
+        }})
         outerDiv.classList.add("outsideBox");
         document.getElementById("gameBoard").appendChild(outerDiv);
     }
@@ -149,6 +165,11 @@ function gameBoardGenerator () {
         middleDiv.style.height="150px";
         middleDiv.style.width="150px";
         middleDiv.id="middleDiv" + i;
+        middleDiv.addEventListener("click",()=>{
+            if (gameStartVariable===true){
+            playerChoice="middleDiv" + i;
+            gamePlayerTurn();
+        }})
         middleDiv.classList.add("middleBox");
         document.getElementById("outerDiv" + i).appendChild(middleDiv);
     }
@@ -157,12 +178,40 @@ function gameBoardGenerator () {
         innerDiv.style.height="100px";
         innerDiv.style.width="100px";
         innerDiv.id="innerDiv" + i;
+        innerDiv.addEventListener("click",()=>{
+            if (gameStartVariable===true){
+            playerChoice="innerDiv" + i;
+            gamePlayerTurn();
+    }})
+        innerDiv.innerText=i+1;
         innerDiv.classList.add("innerBox");
         document.getElementById("middleDiv" + i).appendChild(innerDiv);
     }
 }
 
 gameBoardGenerator();
-// create an interface that collects players names and stores the information in an object. Name, winning cry
 
 // create functions for the game
+
+function gamePlayerTurn () {
+    if (playerTurn===1) {
+    playerChoice.style.backgroundColor=playerOneDetails.teamColor;
+    playerTurn=2;
+}else if (playerTurn===2) {
+        playerChoice.style.backgroundColor=playerTwoDetails.teamColor;
+        playerTurn=3;  
+} else if (playerTurn===3) {
+        playerChoice.style.backgroundColor=playerThreeDetails.teamColor;
+        playerTurn=4;
+} else {
+        playerTurn=1;
+        playerChoice.style.backgroundColor=playerFourDetails.teamColor;
+}}
+
+
+
+// change player each turn
+
+// color and log the choices of each player
+
+// check if a player has three in a row
