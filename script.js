@@ -18,7 +18,10 @@ const submitButOne = document.getElementById("submitOne");
 const submitButTwo = document.getElementById("submitTwo");
 const submitButThree = document.getElementById("submitThree");
 const submitButFour = document.getElementById("submitFour");
-const beginGameBut = document.getElementById("beginGameButton")
+const beginGameBut = document.getElementById("beginGameButton");
+const gameBoardVar = document.getElementById("gameBoard");
+let playerChoice="";
+let playerTurn = 1;
 
 
 function playerDetails (name, battleCry, teamColor) {
@@ -93,6 +96,8 @@ let playerOneDetails={};
 let playerTwoDetails={};
 let playerThreeDetails={};
 let playerFourDetails={};
+let gridBoxes = [];
+let turnTaken=0;
 
 submitButOne.addEventListener("click", ()=> {
     if(gameStartVariable===false){
@@ -127,16 +132,37 @@ submitButFour.addEventListener("click", ()=> {
 }});
 
 beginGameBut.addEventListener("click", ()=>{
-    if (playerOneDetails.name!==undefined && playerTwoDetails.name!==undefined && playerThreeDetails.name!==undefined && playerFourDetails.name!==undefined) {
+    console.log("I made it this far")
+    if (gameStartVariable===true && turnTaken===1) {
+        gridBoxes.length=0;
+        for (i=0;i<9;i++) {
+        let f=document.getElementById("outerDiv" +i);
+        f.style.backgroundColor="white";
+        let g=document.getElementById("innerDiv" + i);
+        g.style.backgroundColor="white";
+        let h=document.getElementById("middleDiv" + i);
+        h.style.backgroundColor="white";
+        gridBoxes.push("outerDiv" +i);
+        gridBoxes.push("innerDiv" + i);
+        gridBoxes.push("middleDiv" + i);
+    }
+        turnTaken=0;
+        playerTurn=1;
+    }
+    if (gameStartVariable===false) {
+        if (playerOneDetails.name!==undefined && playerTwoDetails.name!==undefined && playerThreeDetails.name!==undefined && playerFourDetails.name!==undefined) {
         gamebegin()
       } else {
         let instructionText = document.getElementById("instructions")
         instructionText.innerText = "You cannot begin the game until all names have been entered!"
-      }
+      }  }
 })
 
 let gamebegin = function () {
     gameStartVariable=true;
+    let buttonSwitch=document.getElementById("beginGameButton");
+    buttonSwitch.innerText="Reset Game";
+    buttonSwitch.style.backgroundColor="yellow";
     let goodByeMenu = document.getElementById("topBox");
     let instructionText = document.getElementById("instructions")
     instructionText.innerText = `Team information locked. ${playerOneDetails.color} team begins and play continues clockwise. Players can choose an outer ring, an inner ring or the center box. If the team completes a line of three of the same box choice, the team wins. A team also wins with a line of one outer, one inner, and one center box (in that order).`
@@ -146,10 +172,6 @@ let gamebegin = function () {
 
 // generate a tic tac toe game board
 
-const gameBoardVar = document.getElementById("gameBoard");
-let playerChoice="";
-let playerTurn = 1;
-
 function gameBoardGenerator () {
     for (i=0;i<9;i++) {
         outerDiv = document.createElement("div");
@@ -157,11 +179,11 @@ function gameBoardGenerator () {
         outerDiv.style.width="200px";
         outerDiv.style.backgroundColor="white";
         outerDiv.id="outerDiv" + i;
+        gridBoxes.push(outerDiv.id);
         outerDiv.addEventListener("click",function (e) {
             if (gameStartVariable===true){
             playerChoice=e.target.id;
             gamePlayerTurn();
-            playerTurn+=1;
         }})
         outerDiv.classList.add("outsideBox");
         document.getElementById("gameBoard").appendChild(outerDiv);
@@ -172,6 +194,7 @@ function gameBoardGenerator () {
         middleDiv.style.width="150px";
         middleDiv.style.backgroundColor="white";
         middleDiv.id="middleDiv" + i;
+        gridBoxes.push(middleDiv.id);
         middleDiv.addEventListener("click",function(e) {
             if (gameStartVariable===true){
             playerChoice=e.target.id;
@@ -187,6 +210,7 @@ function gameBoardGenerator () {
         innerDiv.style.width="100px";
         innerDiv.style.backgroundColor="white";
         innerDiv.id="innerDiv" + i;
+        gridBoxes.push(innerDiv.id);
         innerDiv.addEventListener("click",function(e) {
             if (gameStartVariable===true){
             playerChoice=e.target.id;
@@ -202,33 +226,39 @@ function gameBoardGenerator () {
 gameBoardGenerator();
 
 // create functions for the game
-// has an array with all square ids, but removes ids when clicked, then checks array includes ids
 
 function gamePlayerTurn () {
+    console.log(gridBoxes);
+    console.log(playerChoice);
     let t=document.getElementById(playerChoice);
-    if (playerTurn===1) {
+    if (playerTurn===1 && gridBoxes.includes(playerChoice)) {
         console.log(playerTurn);
         console.log(playerChoice);
         console.log(playerOneDetails.color);
         t.style.backgroundColor=playerOneDetails.color;
+        gridBoxes = gridBoxes.filter(e => e !== playerChoice);
         playerTurn=2;
-}else if (playerTurn===2) {
+        turnTaken=1;
+}else if (playerTurn===2 && gridBoxes.includes(playerChoice)) {
     console.log(playerTurn);
     console.log(playerChoice);
     console.log(playerTwoDetails.color);
     t.style.backgroundColor=playerTwoDetails.color;
+    gridBoxes = gridBoxes.filter(e => e !== playerChoice);
     playerTurn=3;
-} else if (playerTurn===3) {
+} else if (playerTurn===3 && gridBoxes.includes(playerChoice)) {
     console.log(playerTurn);
     console.log(playerChoice);
     console.log(playerThreeDetails.color);
     t.style.backgroundColor=playerThreeDetails.color;
+    gridBoxes = gridBoxes.filter(e => e !== playerChoice);
     playerTurn=4;
-} else {
+} else if (playerTurn===4 && gridBoxes.includes(playerChoice)) {
     console.log(playerTurn);
     console.log(playerChoice);
     console.log(playerFourDetails.color);
     t.style.backgroundColor=playerFourDetails.color;
+    gridBoxes = gridBoxes.filter(e => e !== playerChoice);
     playerTurn=1;
 }}
 
