@@ -1,39 +1,204 @@
+
+// create classes to store the user data
+
+let Player = class {
+    constructor(name, battleCry, teamColor) {
+    this.name = name;
+    this.battleCry = battleCry;
+    this.teamColor = teamColor;
+    }
+
+    get getPlayerName () {
+        return this.name;
+    }
+
+    set newName (name) {
+        if (this.name<10) {
+        this.name=name;
+        console.log(this.name);
+        } else {
+        document.getElementById("instructions").innerText="That name is too long!!"
+        }
+    }
+
+    set newBattleCry (battleCry) {
+        if (this.battleCry.length<10) {
+        this.battleCry=battleCry;
+        console.log(this.battleCry);
+        } else {
+        document.getElementById("instructions").innerText="That battlecry is too long!!"
+        }
+    }
+
+    set newTeachColor (teamColor) {
+        this.teamColor=teamColor;
+        console.log(this.teamColor);
+    }      
+} 
+
 // Create an interface to collect player information and log it to an object
 
-const PlayerOneForm = document.getElementById("formOne");
-let playerOneName = document.getElementById("nameOne");
-let playerTwoName = document.getElementById("nameTwo");
-let playerThreeName = document.getElementById("nameThree");
-let playerFourName = document.getElementById("nameFour");
-let playerOneBattleCry = document.getElementById("battleCryOne");
-let playerTwoBattleCry = document.getElementById("battleCryTwo");
-let playerThreeBattleCry = document.getElementById("battleCryThree");
-let playerFourBattleCry = document.getElementById("battleCryFour");
-let teamColorOneChoice = document.getElementById("changeTeamColorOne");
-let teamColorTwoChoice = document.getElementById("changeTeamColorTwo");
-let teamColorThreeChoice = document.getElementById("changeTeamColorThree");
-let teamColorFourChoice = document.getElementById("changeTeamColorFour");
-let gameStartVariable=false;
+
+
 const submitButOne = document.getElementById("submitOne");
 const submitButTwo = document.getElementById("submitTwo");
 const submitButThree = document.getElementById("submitThree");
 const submitButFour = document.getElementById("submitFour");
 const beginGameBut = document.getElementById("beginGameButton");
 const gameBoardVar = document.getElementById("gameBoard");
-let playerChoice="";
 let playerTurn = 1;
+let gridBoxes = [];
 
+// generate a board
 
-function playerDetails (name, battleCry, teamColor) {
+const gameObj = (function() {
+    let gameBoardObj = [];
+    let gameStartVariable=false;
+
+    const playersReady = (function () {
+        gameStartVariable=true;
+    })
+
+    const getGamePlayersReady = () => { return gameStartVariable };
+
+    const getGameBoardObj = (function () {
+        return gameBoardObj;
+    })
+
+    const pushGameObj = (function (value) {
+        gameBoardObj.push(value);
+    })
+
+    return {
+        playersReady,
+        getGamePlayersReady,
+        getGameBoardObj,
+        pushGameObj
+    }
+})();
+
+const game = (function() {
+
+    let playerChoice="";
+    let gameStartVariable=gameObj.getGamePlayersReady;
+    console.log(gameStartVariable);
+
+    const gameBoardGenerator =(function () {
+
+        for (i=0;i<9;i++) {
+            outerDiv = document.createElement("div");
+            outerDiv.style.height="200px";
+            outerDiv.style.width="200px";
+            outerDiv.style.backgroundColor="white";
+            outerDiv.id="outerDiv" + i;
+            gameObj.pushGameObj(outerDiv.id);
+            outerDiv.addEventListener("click",function (e) {
+                if (gameStartVariable===true){
+                playerChoice=e.target.id;
+                gamePlayerTurn();
+            }})
+            outerDiv.classList.add("outsideBox");
+            document.getElementById("gameBoard").appendChild(outerDiv);  
+        }
+        for (i=0;i<9;i++) {
+            middleDiv = document.createElement("div");
+            middleDiv.style.height="150px";
+            middleDiv.style.width="150px";
+            middleDiv.style.backgroundColor="white";
+            middleDiv.id="middleDiv" + i;
+            gameObj.pushGameObj(middleDiv.id);
+            middleDiv.addEventListener("click",function(e) {
+                if (gameStartVariable===true){
+                playerChoice=e.target.id;
+                e.stopPropagation();
+                gamePlayerTurn();
+            }})
+            middleDiv.classList.add("middleBox");
+            document.getElementById("outerDiv" + i).appendChild(middleDiv);
+        }
+        for (i=0;i<9;i++) {
+            innerDiv = document.createElement("div");
+            innerDiv.style.height="100px";
+            innerDiv.style.width="100px";
+            innerDiv.style.backgroundColor="white";
+            innerDiv.id="innerDiv" + i;
+            gameObj.pushGameObj(innerDiv.id);
+            innerDiv.addEventListener("click",function(e) {
+                if (gameStartVariable===true){
+                playerChoice=e.target.id;
+                e.stopPropagation();
+                gamePlayerTurn();
+        }})
+            innerDiv.innerText=i+1;
+            innerDiv.classList.add("innerBox");
+            document.getElementById("middleDiv" + i).appendChild(innerDiv);
+    };
+    console.log(gameObj.getGameBoardObj());
+    })();
+
+})();
+
+/* function playerDetails (name, battleCry, teamColor) {
         this.name = name;
         this.battleCry = battleCry;
         this.color = teamColor;
-}
+} */
+
+const PlayerOneForm = document.getElementById("formOne");      
+
+const myTeamDetails = (function() {
+  let gameStartVariable=gameObj.getGamePlayersReady();
+
+  let playerOneName = document.getElementById("nameOne");
+  let playerTwoName = document.getElementById("nameTwo");
+  let playerThreeName = document.getElementById("nameThree");
+  let playerFourName = document.getElementById("nameFour");
+  let playerOneBattleCry = document.getElementById("battleCryOne");
+  let playerTwoBattleCry = document.getElementById("battleCryTwo");
+  let playerThreeBattleCry = document.getElementById("battleCryThree");
+  let playerFourBattleCry = document.getElementById("battleCryFour");
+  let teamColorOneChoice = document.getElementById("changeTeamColorOne");
+  let teamColorTwoChoice = document.getElementById("changeTeamColorTwo");
+  let teamColorThreeChoice = document.getElementById("changeTeamColorThree");
+  let teamColorFourChoice = document.getElementById("changeTeamColorFour");
+
+  submitButOne.addEventListener("click", ()=> {
+    if(gameStartVariable===false){
+        if (playerOneName.value.length<10 && playerOneBattleCry.value.length<10) {
+    playerOneDetails = new Player(playerOneName.value,playerOneBattleCry.value,teamColorOneChoice.value);
+    let playerOneText = document.getElementById("playerOneText");
+    playerOneText.innerText = playerOneDetails.name;
+        }else if (playerOneName.value.length>=10 ){
+    document.getElementById("instructions").innerText = "That name is too long!";           
+        }else if (playerOneBattleCry.value.length>=10) {
+    document.getElementById("instructions").innerText = "That battlecry is too long! Choose something more pithy!";     
+        }
+}});
+
+submitButTwo.addEventListener("click", ()=> {
+    if(gameStartVariable===false){
+    playerTwoDetails = new Player(playerTwoName.value,playerTwoBattleCry.value,teamColorTwoChoice.value);
+    let playerTwoText = document.getElementById("playerTwoText");
+    playerTwoText.innerText = playerTwoDetails.name;
+}});
+
+submitButThree.addEventListener("click", ()=> {
+    if(gameStartVariable===false){
+    playerThreeDetails = new Player(playerThreeName.value,playerThreeBattleCry.value,teamColorThreeChoice.value);
+    let playerThreeText = document.getElementById("playerThreeText");
+    playerThreeText.innerText = playerThreeDetails.name;
+}});
+
+submitButFour.addEventListener("click", ()=> {
+    if(gameStartVariable===false){
+    playerFourDetails = new Player(playerFourName.value,playerFourBattleCry.value,teamColorFourChoice.value);
+    let playerFourText = document.getElementById("playerFourText");
+    playerFourText.innerText = playerFourDetails.name;
+}});
 
 teamColorOneChoice.addEventListener("change", ()=>{
     if(gameStartVariable===false) {
     if (teamColorOneChoice.value==="purple") {
-        console.log("hi");
         let OneBackColor = document.getElementById("playerOneInfo");
         let playingSpaceOne = document.getElementById("playerOne");
         OneBackColor.style.backgroundColor="purple";
@@ -92,13 +257,15 @@ teamColorFourChoice.addEventListener("change", ()=>{
     }
 }})
 
+})();
+
 let playerOneDetails={};
 let playerTwoDetails={};
 let playerThreeDetails={};
 let playerFourDetails={};
-let gridBoxes = [];
-let turnTaken=0;
 
+let turnTaken=0;
+/*
 submitButOne.addEventListener("click", ()=> {
     if(gameStartVariable===false){
     playerOneDetails = new playerDetails(playerOneName.value,playerOneBattleCry.value,teamColorOneChoice.value);
@@ -127,7 +294,14 @@ submitButFour.addEventListener("click", ()=> {
     playerFourText.innerText = playerFourDetails.name;
 }});
 
-beginGameBut.addEventListener("click", ()=>{
+*/
+const beginGameButFunc = (function () {
+
+
+    let gameStartVariable = gameObj.getGamePlayersReady();
+    let gridBoxes = gameObj.getGameBoardObj();
+  beginGameBut.addEventListener("click", ()=>{
+    console.log(gameObj.getGamePlayersReady());
     if (gameStartVariable===true && turnTaken===1) {
         gridBoxes.length=0;
         for (i=0;i<9;i++) {
@@ -137,9 +311,9 @@ beginGameBut.addEventListener("click", ()=>{
         g.style.backgroundColor="white";
         let h=document.getElementById("middleDiv" + i);
         h.style.backgroundColor="white";
-        gridBoxes.push("outerDiv" +i);
-        gridBoxes.push("innerDiv" + i);
-        gridBoxes.push("middleDiv" + i);
+        gameObj.pushGameObj("outerDiv" +i);
+        gameObj.pushGameObj("innerDiv" + i);
+        gameObj.pushGameObj("middleDiv" + i);
     }
         turnTaken=0;
         playerTurn=1;
@@ -153,8 +327,10 @@ beginGameBut.addEventListener("click", ()=>{
       }  }
 })
 
+})();
+
 let gamebegin = function () {
-    gameStartVariable=true;
+    gameObj.playersReady();
     let buttonSwitch=document.getElementById("beginGameButton");
     buttonSwitch.innerText="Reset Game";
     buttonSwitch.style.backgroundColor="yellow";
@@ -169,66 +345,16 @@ let gamebegin = function () {
 
 // generate a tic tac toe game board
 
-function gameBoardGenerator () {
-    for (i=0;i<9;i++) {
-        outerDiv = document.createElement("div");
-        outerDiv.style.height="200px";
-        outerDiv.style.width="200px";
-        outerDiv.style.backgroundColor="white";
-        outerDiv.id="outerDiv" + i;
-        gridBoxes.push(outerDiv.id);
-        outerDiv.addEventListener("click",function (e) {
-            if (gameStartVariable===true){
-            playerChoice=e.target.id;
-            gamePlayerTurn();
-        }})
-        outerDiv.classList.add("outsideBox");
-        document.getElementById("gameBoard").appendChild(outerDiv);
-    }
-    for (i=0;i<9;i++) {
-        middleDiv = document.createElement("div");
-        middleDiv.style.height="150px";
-        middleDiv.style.width="150px";
-        middleDiv.style.backgroundColor="white";
-        middleDiv.id="middleDiv" + i;
-        gridBoxes.push(middleDiv.id);
-        middleDiv.addEventListener("click",function(e) {
-            if (gameStartVariable===true){
-            playerChoice=e.target.id;
-            e.stopPropagation();
-            gamePlayerTurn();
-        }})
-        middleDiv.classList.add("middleBox");
-        document.getElementById("outerDiv" + i).appendChild(middleDiv);
-    }
-    for (i=0;i<9;i++) {
-        innerDiv = document.createElement("div");
-        innerDiv.style.height="100px";
-        innerDiv.style.width="100px";
-        innerDiv.style.backgroundColor="white";
-        innerDiv.id="innerDiv" + i;
-        gridBoxes.push(innerDiv.id);
-        innerDiv.addEventListener("click",function(e) {
-            if (gameStartVariable===true){
-            playerChoice=e.target.id;
-            e.stopPropagation();
-            gamePlayerTurn();
-    }})
-        innerDiv.innerText=i+1;
-        innerDiv.classList.add("innerBox");
-        document.getElementById("middleDiv" + i).appendChild(innerDiv);
-    }
-}
 
-gameBoardGenerator();
 
 // create functions for the game
 
 function gamePlayerTurn () {
+    let gameBoxes = gameObj.getGameBoardObj();
     let t=document.getElementById(playerChoice);
     if (playerTurn===1 && gridBoxes.includes(playerChoice)) {
         t.style.backgroundColor=playerOneDetails.color;
-        gridBoxes = gridBoxes.filter(e => e !== playerChoice);
+        gridBoxes = gameBoxes.filter(e => e !== playerChoice);
         let playerOneText = document.getElementById("playerOneText");
         playerOneText.innerText = playerOneDetails.name;
         let playerTwoText = document.getElementById("playerTwoText");
