@@ -1,5 +1,5 @@
 
-// create classes to store the user data
+// create classes to store  the user data
 
 let Player = class {
     constructor(name, battleCry, teamColor) {
