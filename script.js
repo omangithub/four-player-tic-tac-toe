@@ -1,19 +1,3 @@
-// user data recorded with a factory function
-
-<<<<<<< HEAD
-//is branches working?
-
-// create classes to store the user data
-=======
-/* function playerDetails (name, battleCry, teamColor) {
-        this.name = name;
-        this.battleCry = battleCry;
-        this.color = teamColor;
-} */
-
-// now change the factory function into classes to store  the user data
->>>>>>> 4_player_ttt_classes
-
 let Player = class {
     constructor(name, battleCry, teamColor) {
     this.name = name;
